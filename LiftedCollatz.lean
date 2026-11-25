@@ -117,35 +117,6 @@ def decode_list : Nat → Nat → List Nat
 -- SECTION 2: Basic Valuation & Parity Lemmas
 -- ============================================================================
 
-/-
-lemma count_div_by_2_two_pow_mul {a m : Nat} (hm : m % 2 = 1) :
-    count_div_by_2 (2 ^ a * m) = a := by
-  have hm0 : m ≠ 0 := by omega
-  have hnotdvd : ¬ (2 ∣ m) := by omega
-  simp [count_div_by_2, Nat.factorization_mul (by positivity) hm0,
-        Nat.Prime.factorization_pow Nat.prime_two,
-        Nat.factorization_eq_zero_of_not_dvd hnotdvd]
-
-
-lemma count_div_by_2_two_pow_mul {a m : Nat} (hm : m % 2 = 1) :
-    count_div_by_2 (2 ^ a * m) = a := by
-  have hm0 : m ≠ 0 := by omega
-  have hnotdvd : ¬ (2 ∣ m) := by omega
-  have h2a : (2 : Nat) ^ a ≠ 0 := Nat.pow_ne_zero (by decide)
-  simp [count_div_by_2, Nat.factorization_mul h2a hm0,
-        Nat.Prime.factorization_pow Nat.prime_two,
-        Nat.factorization_eq_zero_of_not_dvd hnotdvd]
-
-
-lemma count_div_by_2_two_pow_mul {a m : Nat} (hm : m % 2 = 1) :
-    count_div_by_2 (2 ^ a * m) = a := by
-  have hm0 : m ≠ 0 := by omega
-  have hnotdvd : ¬ (2 ∣ m) := by omega
-  simp [count_div_by_2, Nat.factorization_mul (by simp) hm0,
-        Nat.Prime.factorization_pow Nat.prime_two,
-        Nat.factorization_eq_zero_of_not_dvd hnotdvd]
--/
-
 lemma count_div_by_2_two_pow_mul {a m : Nat} (hm : m % 2 = 1) :
     count_div_by_2 (2 ^ a * m) = a := by
   have hm0 : m ≠ 0 := by omega
@@ -178,14 +149,6 @@ lemma build_intercept_odd (as : List Nat) (h : ∀ a ∈ as, 1 ≤ a) :
       rw [Nat.pow_mod]; norm_num
     rw [Nat.add_mod, Nat.mul_mod, hpow3, hpow2]
     omega
-
-/-
-lemma trace_y_ne_zero (x : Nat) (hx : x ≠ 0) (n : Nat) :
-    (trace_state x n).1 ≠ 0 := by
-  induction n with
-  | zero => simp [trace_state]; exact hx
-  | succ n _ => simp [trace_state. ils1b]
--/
 
 lemma trace_y_ne_zero (x : Nat) (hx : x ≠ 0) (n : Nat) :
     (trace_state x n).1 ≠ 0 := by
