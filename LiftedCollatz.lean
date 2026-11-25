@@ -3,12 +3,8 @@
 --sorrys, no duplicate definitions, and clean formatting ready for lake build.
 
 --LiftedCollatz.lean
-
 --lean -- comment or not? not highlighted.
-import Mathlib.Data.Nat.Factorization.Basic
-import Mathlib.Data.Nat.Totient
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.Tactic
+import Mathlib
 
 namespace LiftedCollatz
 
