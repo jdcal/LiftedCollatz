@@ -35,6 +35,8 @@ Every $n$-step trajectory satisfies the exact affine invariant $y_n = 3^n x + b_
 ### 6. Verified Peelability Validator (`Sections 11, 12`)
 * **`validate_boutique_intercept` & `validate_and_peel_sound`**: Provides a decidable `Option`-returning validator `validate_and_peel` proven sound and complete against `build_intercept`.
 
+The peel algorithm decodes the y-intercept, b, to obtain the lift list / jump list.
+
 ## Building the Project
 
 ```bash
