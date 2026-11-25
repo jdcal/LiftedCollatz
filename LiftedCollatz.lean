@@ -279,12 +279,12 @@ theorem lift_aux_recovers_sum (as : List Nat) (h : ∀ a ∈ as, 1 ≤ a) (tot :
   have hnotodd : ¬ ((2 ^ a * build_intercept tl) % 2 = 1) := by
     have : 2 ∣ 2 ^ a * build_intercept tl := dvd_mul_of_dvd_left (dvd_pow_self 2 (by omega)) _
     omega
-  rw [if_neg hnotodd]
+  rw [ite_eq_right hnotodd]
   have hodd := build_intercept_odd tl htl
   rw [count_div_by_2_two_pow_mul hodd]
   rw [Nat.mul_div_cancel_left _ (by positivity)]
   have hge1 : ¬ (build_intercept tl < 1) := by omega
-  rw [if_neg hge1]
+  rw [ite_eq_right hge1]
   rw [ih htl (tot + a), List.sum_cons]
   ring
 
@@ -312,12 +312,12 @@ theorem decode_list_build_intercept (as : List Nat) (h : ∀ a ∈ as, 1 ≤ a) 
     have hnotodd : ¬ ((2 ^ a * build_intercept tl) % 2 = 1) := by
       have : 2 ∣ 2 ^ a * build_intercept tl := dvd_mul_of_dvd_left (dvd_pow_self 2 (by omega)) _
       omega
-    rw [if_neg hnotodd]
+    rw [ite_eq_right hnotodd]
     have hodd := build_intercept_odd tl htl
     rw [count_div_by_2_two_pow_mul hodd]
     rw [Nat.mul_div_cancel_left _ (by positivity)]
     have hge1 : ¬ (build_intercept tl < 1) := by omega
-    rw [if_neg hge1, ih htl]
+    rw [ite_eq_right hge1, ih htl]
 
 /-- build_intercept is strictly injective for any fixed step count n. -/
 theorem build_intercept_injective_of_length_eq
@@ -1063,14 +1063,14 @@ theorem validate_boutique_intercept (jumps : List Nat) (h : ∀ a ∈ jumps, 1 �
     have hgt : ¬ (build_intercept (a :: tl) ≤ 3 ^ (tl.length + 1)) := by
       simp only [build_intercept]
       omega
-    rw [if_neg hgt]
+    rw [ite_eq_right hgt]
     have hy_new : build_intercept (a :: tl) - 3 ^ (tl.length + 1) = 2 ^ a * build_intercept tl := by
       simp [build_intercept]
     rw [hy_new]
     have hnotodd : ¬ ((2 ^ a * build_intercept tl) % 2 = 1) := by
       have : 2 ∣ 2 ^ a * build_intercept tl := dvd_mul_of_dvd_left (dvd_pow_self 2 (by omega)) _
       omega
-    rw [if_neg hnotodd]
+    rw [ite_eq_right hnotodd]
     have hodd := build_intercept_odd tl htl
     rw [count_div_by_2_two_pow_mul hodd]
     rw [Nat.mul_div_cancel_left _ (by positivity)]
@@ -1159,7 +1159,7 @@ lemma safe_aux_eq_validate (k : Nat) :
   induction k with
   | zero =>
     intro y tot
-    rw [safe_count_div_by_2_in_recursive_lift.aux, if_pos (by decide)]
+    rw [safe_count_div_by_2_in_recursive_lift.aux, ite_eq_left (by decide)]
     simp only [validate_and_peel]
     split_ifs <;> simp
   | succ k ih =>
@@ -1167,7 +1167,7 @@ lemma safe_aux_eq_validate (k : Nat) :
     rw [safe_count_div_by_2_in_recursive_lift.aux]
     simp only [validate_and_peel]
     have hnotlt1 : ¬ (k + 1 < 1) := by omega
-    rw [if_neg hnotlt1]
+    rw [ite_eq_right hnotlt1]
     split_ifs with hle hodd hnext
     · rfl
     · rfl
@@ -1194,7 +1194,7 @@ lemma safe_aux_eq_validate (k : Nat) :
 theorem safe_count_eq_validate_and_peel (y n : Nat) (hn : 1 ≤ n) :
     safe_count_div_by_2_in_recursive_lift y n =
     (validate_and_peel y (n - 1)).map Prod.snd := by
-  simp only [safe_count_div_by_2_in_recursive_lift, if_neg (by omega : ¬ (n < 1))]
+  simp only [safe_count_div_by_2_in_recursive_lift, ite_eq_right (by omega : ¬ (n < 1))]
   rw [safe_aux_eq_validate (n - 1) y 0]
   cases validate_and_peel y (n - 1) <;> simp
 

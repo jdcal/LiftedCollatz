@@ -1,12 +1,9 @@
 name = "LiftedCollatz"
 version = "0.1.0"
-defaultTargets = ["liftedcollatz"]
+defaultTargets = ["LiftedCollatz"]
 
 [[lean_lib]]
 name = "LiftedCollatz"
-
-[[lean_exe]]
-name = "liftedcollatz"
 
 [[require]]
 name = "mathlib"
