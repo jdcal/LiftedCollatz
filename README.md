@@ -1,7 +1,9 @@
-```markdown
+
 # Lifted Collatz Trajectories in Lean 4
 
 A formalization of division-free ("lifted") Collatz dynamics in Lean 4 and Mathlib, proving trajectory reversibility, Euler totient periodicity, infinite cycle tower reduction, sharpened 2-step growth bounds, and the non-existence of non-trivial odd Collatz cycles of length $n \le 6$.
+
+All theorems and lemmas have blue checkmarks. No linter notes. No sorrys. Everything is done in the naturals, i.e. no $\mathbb{Q}$ or $\mathbb{Z}$.
 
 ## Mathematical Overview
 
@@ -44,9 +46,19 @@ Every $n$-step trajectory satisfies the exact affine invariant $y_n = 3^n x + b_
 
 The peel algorithm decodes the $y$-intercept, $b$, to obtain the lift list / jump list.
 
-### 7. Commentary and Notes from Gemini
+### 7. Commentary
 
-I had written proof-of-concept code in Common Lisp. I wanted a more robust presentation of the ideas, and I wanted to learn more about Lean. I began writing experimental code and slowly pieced together enough Lean 4 code to allow Gemini to see my ideas. After showing Gemini the $y$-intercept's Horner-style expansion, its response was "Aha!". That was Nov 22, 2026. Today is Nov 25, 2026. Every theorem in this project was generated in cooperation with Gemini in those three days, with today being project and GitHub day.
+I had written proof-of-concept code in Common Lisp. I wanted a more robust presentation of the ideas. I wanted to learn more about Lean. I began writing experimental Lean 4 code and slowly pieced together enough to enable Gemini to see my ideas. 
+
+After showing Gemini the $y$-intercept's Horner-style expansion, and pointing it to the peel/decomposition algorithm for the Nat y-intercept $b$, its response was "Aha!". Discovering that peel algorithm while sitting on my couch was the single most satisfying moment when creating this project.
+
+I had experimental Lean 4 code on Nov 22, 2026. Today is Nov 25, 2026. Every theorem in this project was generated in cooperation with Gemini in those three days, with today being project and GitHub day. I simply copy/pasted between Safari and VS Code. Gemini took its understanding of my core engine and began connecting it to known results, generating theorems to connect my engine to those results.
+
+The experimental code was a toy car made from Legos but you could drive the car. To the airport, and the car turned into a spaceship along the way so instead you decided to fly to the moon. Gemini hooked my engine to a lot of math that I did not, and do not, know. I look forward to learning it. 
+
+I did direct the three-day process, acting as the driver of the car. I would state the thing to be proved. Gemini would generate the Lean 4 for the proof. We'd go back and forth correcting errors. Usually a theorem had 1 to 3 errors affecting only one line each. I'd paste the line with the error, and the error text, into Gemini on Safari and manually make the suggested correction in VS Code. Once we had blue checkmarks, Gemini might suggest another thing to be proved based upon the current proof.
+
+### Notes From Gemini
 
 I asked Gemini to describe the project's contents:
 
@@ -114,14 +126,13 @@ In addition to Eliahou's density window, your module also independently formaliz
 * Steiner's / Böhm–Sontacchi's Cycle Equation (`trace_state_affine` and `build_intercept` in Sections 1 & 3).
 * Small-Cycle Elimination for $n \le 6$ (`no_nontrivial_1_cycle` through `no_nontrivial_6_cycle` in Sections 6–10).
 
+## Desired Future of the Project
+
+Is there a community that would like to take the project?
+
 ## Building the Project
 
-```bash
+```
 lake exe cache get
 lake build
 
-```
-
-```
-
-```
