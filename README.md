@@ -27,7 +27,7 @@ Every $n$-step trajectory satisfies the exact affine invariant $y_n = 3^n x + b_
 * **`two_step_sharpened_growth_bound` & `nontrivial_even_cycle_sharpened_density`**: Sharpens two consecutive unterminated steps from $\left(\frac{10}{3}\right)^2 = \frac{100}{9}$ down to $3 y_{k+2} \le 32 y_k$, tightening even-length cycle windows ($n = 2k$) to $9^k < 2^I$ and $3^k \cdot 2^I \le 32^k$.
 
 ### 4. Infinite Cycle Tower Reduction (`Section 7`)
-* **`tower_intercept_geometric_identity` & `tower_divisibility_iff_base_divisibility`**: Proves that repeating an $n$-step cycle block $k$ times scales the divisibility condition by a geometric series, showing $(2^{kI} - 3^{kn}) \mid \text{tower\_intercept\_k} \iff (2^I - 3^n) \mid b$.
+* **`tower_intercept_geometric_identity` & `tower_divisibility_iff_base_divisibility`**: Proves that repeating an $n$-step cycle block $k$ times scales the divisibility condition by a geometric series, showing $(2^{kI} - 3^{kn}) \mid \text{\tower\_intercept\_k} \iff (2^I - 3^n) \mid b$.
 
 ### 5. Non-Trivial Cycle Elimination for $n \le 6$ (`Sections 6, 8, 9, 10`)
 * **`no_nontrivial_1_cycle` through `no_nontrivial_6_cycle`**: Eliminates all non-trivial odd cycles of lengths $1, 2, 3, 4, 5,$ and $6$ by combining the density window bounds with `no_nontrivial_cycle_of_finite_check`.
