@@ -4,9 +4,9 @@ A formalization of division-free ("lifted") Collatz dynamics in Lean 4 and Mathl
 
 ## Mathematical Overview
 
-Instead of dividing by $2$ at every even step, the **lifted Collatz map** tracks powers of $2$ multiplicatively using the Isolated Least Significant 1-Bit $\operatorname{ils1b}(y) = 2^{v_2(y)}$:
+Instead of dividing by $2$ at every even step, the **lifted Collatz map** tracks powers of $2$ multiplicatively using the Isolated Least Significant 1-Bit $\mathrm{ils1b}(y) = 2^{v_2(y)}$:
 
-$$y_{k+1} = 3 y_k + \operatorname{ils1b}(y_k), \qquad b_{k+1} = 3 b_k + \operatorname{ils1b}(y_k)$$
+$$y_{k+1} = 3 y_k + \mathrm{ils1b}(y_k), \qquad b_{k+1} = 3 b_k + \mathrm{ils1b}(y_k)$$
 
 Every $n$-step trajectory satisfies the exact affine invariant $y_n = 3^n x + b_n$. A trajectory reaches $1$ in the standard Collatz map if and only if $y_n = 2^t$ (`is_pow_two`) for some $n$.
 
@@ -14,7 +14,7 @@ Every $n$-step trajectory satisfies the exact affine invariant $y_n = 3^n x + b_
 
 ### 1. Affine Invariant & Bijective Intercept Decoding (`Section 3`)
 * **`trace_state_affine`**: Proves $y_n = 3^n x + b_n$ for all $n \in \mathbb{N}$ starting from $(x, 0)$.
-* **`forward_trajectory_produces_build_intercept` & `decode_list_build_intercept`**: Establishes an exact bijection between step-by-step 2-adic jump lists $[a_1, \dots, a_{n-1}]$ ($a_i \ge 1$) and polynomial $y$-intercepts $b = \operatorname{build\_intercept}([a_1, \dots, a_{n-1}])$.
+* **`forward_trajectory_produces_build_intercept` & `decode_list_build_intercept`**: Establishes an exact bijection between step-by-step 2-adic jump lists $[a_1, \dots, a_{n-1}]$ ($a_i \ge 1$) and polynomial $y$-intercepts $b = \mathrm{build\_intercept}([a_1, \dots, a_{n-1}])$.
 * **`build_intercept_injective_of_length_eq` & `starting_x_unique_from_y_and_b`**: Proves unique recovery of both the jump history and the starting seed $x$ from $(y_n, b_n)$.
 
 ### 2. Parameter Necessity & Euler Totient Periodicity (`Section 4`)
