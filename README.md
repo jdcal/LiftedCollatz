@@ -46,17 +46,60 @@ Every $n$-step trajectory satisfies the exact affine invariant $y_n = 3^n x + b_
 
 The peel algorithm decodes the $y$-intercept, $b$, to obtain the lift list / jump list.
 
+### 7. Other Features
+
+1. Zero Data Bloat: LiftedState stores only { n, y, b }. All 8 fields (x, pow_2_count, tot_pow_2_count, inc_ls1b, odd_kernel, etc.) on demand.
+2. True Bidirectional Single-State Stepping: step_forward and step_backward work on any standalone LiftedState without needing x or past history, backed by step_backward_step_forward_of_trace.
+3. Constructive (I, n, b) & Totient Shifting: state_from_I_n_b and totient_shift_state let you jump straight to any totient-shifted orbit (I + k * φ(3^n), n, b) and immediately inspect it or walk it backward with step_backward.
+4. Instant Witness Discovery: find_odd_x_for_powers 11 4 and find_odd_x_for_powers 11 3 constructively rediscover your b = 185 two-slope collision in milliseconds.
+
+In addition to Eliahou's density window, your module also independently reproduces:
+
+5. Steiner's / Böhm–Sontacchi's Cycle Equation (trace_state_affine and build_intercept in Sections 1 & 3).
+
+6. Small-Cycle Elimination for n ≤ 6 (no_nontrivial_1_cycle through no_nontrivial_6_cycle in Sections 6–10).
+
+### Upcoming Work In Progress
+
+Reading through your complete LiftedCollatz.lean file, the exact theorem from Shalom Eliahou's 1993 paper ("The 3x+1 problem: new lower bounds on nontrivial cycle lengths", Discrete Mathematics 118) is reproduced in Section 5 (nontrivial_cycle_density_window): 
+$(3^{n}<2^{I}\quad \text{and}\quad 3^{n}\cdot 2^{I}\le 10^{n})$
+
+Why This Is Eliahou's Exact Result
+
+In any nontrivial Collatz cycle on positive integers, every odd integer $m ≥ 3$ satisfies:
+$(3m+1\le 3m+\frac{m}{3}=\frac{10}{3}m)$.
+
+Multiplying this inequality across all n odd steps in a cycle gives:
+$(2^{I}=\prod _{i=1}^{n}\frac{3m_{i}+1}{m_{i}}\le \left(\frac{10}{3}\right)^{n}\implies 3^{n}\cdot 2^{I}\le 10^{n})$.
+
+Taking base-2 logarithms of your two integer inequalities in nontrivial_cycle_density_window yields Eliahou's 1993 Density Window for the ratio of total divisions by 2 (I) to odd steps (n):
+$(\frac{\ln 3}{\ln 2}<\frac{I}{n}\le \frac{\ln (10/3)}{\ln 2})$.
+
+(In Eliahou's paper, which counts total Collatz steps N = I + n versus odd steps n, adding 1 to each side gives his famous bound $(\frac{\ln 3}{\ln 2} < \frac{N}{n} \le \frac{\ln(20/3)}{\ln 2})$.) 
+
+## How Your Code Goes Further in Section 13
+
+In Section 12 & 13 (two_step_sharpened_growth_bound and nontrivial_even_cycle_sharpened_density), you actually derive a strict sharpening of Eliahou's baseline bound for even-length cycles n = 2k:
+• Because an odd step at m=3 leads to $(\frac{3(3)+1}{2} = 5)$, two consecutive odd steps can never both achieve the worst-case $(\frac{10}{3})$ multiplier $(3 → 5$ gives $(\frac{10}{3} \cdot \frac{16}{5} = \frac{32}{3} < \frac{100}{9})$).
+• This tightens Eliahou's upper bound from $(3^{2k} \cdot 2^I \le 100^k)$ down to $(3^k \cdot 2^I \le 32^k)$ (i.e. $(2^I \le (32/3)^k$) instead of $((100/9)^k)$).
+
+Other Classical Results in Your File
+
+In addition to Eliahou's density window, your module also independently reproduces:
+• Steiner's / Böhm–Sontacchi's Cycle Equation (trace_state_affine and build_intercept in Sections 1 & 3).
+• Small-Cycle Elimination for n ≤ 6 (no_nontrivial_1_cycle through no_nontrivial_6_cycle in Sections 6–10).
+
 ### 7. Commentary
 
 I had written proof-of-concept code in Common Lisp. I wanted a more robust presentation of the ideas. I wanted to learn more about Lean. I began writing experimental Lean 4 code and slowly pieced together enough to enable Gemini to see my ideas. 
 
-After showing Gemini the $y$-intercept's Horner-style expansion, and pointing it to the peel/decomposition algorithm for the Nat y-intercept $b$, its response was "Aha!". Discovering that peel algorithm while sitting on my couch was the single most satisfying moment when creating this project.
+After showing Gemini the $y$-intercept's Horner-style expansion, and pointing it to the peel/decomposition algorithm for the Nat y-intercept $b$, its response was "Aha!". Discovering that peel algorithm while sitting on my couch was the single most satisfying purely-human moment when creating this project. Watching free-to-use Gemini do its magic in copy/paste mode to VS Code was an incredible experience, though not an entirely human one.
 
 I had experimental Lean 4 code on Nov 22, 2026. Today is Nov 25, 2026. Every theorem in this project was generated in cooperation with Gemini in those three days, with today being project and GitHub day. I simply copy/pasted between Safari and VS Code. Gemini took its understanding of my core engine and began connecting it to known results, generating theorems to connect my engine to those results.
 
-The experimental code was a toy car made from Legos but you could drive the car. To the airport, and the car turned into a spaceship along the way so instead you decided to fly to the moon. Gemini hooked my engine to a lot of math that I did not, and do not, know. I look forward to learning it. 
+The experimental code was a toy car made from Legos but you could drive the car. To the airport, and the car turned into a spaceship along the way so instead you decided to fly to the moon. Gemini hooked my engine to a lot of math that I did not, and do not, know or understand. I do see the bones of what I learned designing my engine everywhere in these new theorems. I look forward to learning these new ideas. 
 
-I did direct the three-day process, acting as the driver of the car. I would state the thing to be proved. Gemini would generate the Lean 4 for the proof. We'd go back and forth correcting errors. Usually a theorem had 1 to 3 errors affecting only one line each. I'd paste the line with the error, and the error text, into Gemini on Safari and manually make the suggested correction in VS Code. Once we had blue checkmarks, Gemini might suggest another thing to be proved based upon the current proof.
+I directed the three-day process, acting as the driver of the car. I would state the thing to be proved. Gemini would generate the Lean 4 for the proof. We'd go back and forth correcting errors. Usually a theorem had 1 to 3 errors affecting only one line each. I'd paste the line with the error, and the error text, into Gemini on Safari and manually make the suggested correction in VS Code. Once we had blue checkmarks, Gemini might suggest another thing to be proven based upon the current proof.
 
 ### Notes From Gemini
 
