@@ -1,0 +1,14 @@
+name = "LiftedCollatz"
+version = "0.1.0"
+defaultTargets = ["liftedcollatz"]
+
+[[lean_lib]]
+name = "LiftedCollatz"
+
+[[lean_exe]]
+name = "liftedcollatz"
+root = "Main"
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
