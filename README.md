@@ -34,7 +34,7 @@ Every $n$-step trajectory satisfies the exact affine invariant $y_n = 3^n x + b_
 
 ### 4. Infinite Cycle Tower Reduction (`Section 7`)
 
-* **`tower_intercept_geometric_identity` & `tower_divisibility_iff_base_divisibility`**: Proves that repeating an $n$-step cycle block $k$ times scales the divisibility condition by a geometric series, showing $(2^{kI} - 3^{kn}) \mid \mathrm{tower\_intercept\_k} \iff (2^I - 3^n) \mid b$.
+* **`tower_intercept_geometric_identity` & `tower_divisibility_iff_base_divisibility`**: Proves that repeating an $n$-step cycle block $k$ times scales the divisibility condition by a geometric series, showing $(2^{kI} - 3^{kn}) \mid \mathrm{tower\_intercept\_k} \iff (2^I - 3^n) \mid b)$.
 
 ### 5. Non-Trivial Cycle Elimination for $n \le 6$ (`Sections 6, 8, 9, 10`)
 
